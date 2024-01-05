@@ -1,25 +1,28 @@
-import { Outlet } from "react-router-dom";
-import { Header } from "components/Header/Header"
-import { useDispatch } from "react-redux";
-import { setNoteList } from "store/note-slice";
 import { NoteAPI } from "api/note-api";
+import { Header } from "components/Header/Header";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Outlet } from "react-router-dom";
+import { setNoteList } from "store/note/note-slice";
+import s from "./style.module.css";
 
 export function App() {
+  const dispatch = useDispatch();
 
-  const dispatch=useDispatch();
-
-  async function fetchAllNote(){
-    const noteListe= await NoteAPI.fetchAll;
-    dispatch(setNoteList(noteListe))
+  async function fetchAllNotes() {
+    const noteList = await NoteAPI.fetchAll();
+    dispatch(setNoteList(noteList));
   }
+  useEffect(() => {
+    fetchAllNotes();
+  }, []);
 
-useEffect(()=>{
-  fetchAllNote();
-},[])
-
-  return <div className="container-fluid">
-    <Header />
-    <Outlet />
-  </div>;
+  return (
+    <div className="container-fluid">
+      <Header />
+      <div className={s.outlet_container}>
+        <Outlet />
+      </div>
+    </div>
+  );
 }
