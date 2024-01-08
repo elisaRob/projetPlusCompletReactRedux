@@ -1,4 +1,4 @@
 import s from "./style.module.css"
-export function BoutonPrimary({children,onClick}){
-    return <button onClick={onClick} type="button" className={`btn btn-primary ${s.button}`}>{children}</button>
+export function BoutonPrimary({children,onClick,isDisabled}){
+    return <button disabled={isDisabled} onClick={onClick} type="button" className={`btn btn-primary ${s.button}`}>{children}</button>
 }
